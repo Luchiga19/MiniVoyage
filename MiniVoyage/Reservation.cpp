@@ -7,8 +7,9 @@
 
 using namespace std;
 
-Reservation::Reservation(string name) :
+Reservation::Reservation(string name, ProxyOffer& offer) :
 	TripElement(name, "Reservation"),
+	offer(offer),
 	date(""), trip("") 
 {}
 
@@ -25,6 +26,10 @@ Reservation::Reservation(const Reservation& other) :
 	TripElement(other.getName(), other.getType()),
 	offer(other.offer)
 {}
+
+string Reservation::toString() const {
+	return "    " + getType() + " " + getName() + ", prix total ($ CA): " + to_string(calculateCost()) + ".\n";
+}
 
 int Reservation::calculateCost() const {
 	return offer.getCost();

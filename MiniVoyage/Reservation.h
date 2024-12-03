@@ -9,10 +9,12 @@ class Reservation :
     public TripElement
 {
 public:
-    Reservation(std::string name);
+    Reservation(std::string name, ProxyOffer& offer);
     Reservation(std::string name, Offer* bdor, std::string date, std::string trip);
     Reservation(const Reservation& other);
     ~Reservation() override = default;
+
+    std::string toString() const override;
 
     int calculateCost() const override;
 

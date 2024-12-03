@@ -24,6 +24,8 @@ public:
 
     const_iterator begin() const;
     const_iterator end() const;
+
+    std::string toString() const override;
     
     TripElement* getElementByName(std::string name) const override;
 

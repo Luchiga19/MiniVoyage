@@ -173,6 +173,10 @@ int main() {
 	cout << "Total des frais pour " << tripDiego->getName() << " ($ CA): " << tripDiego->calculateCost() << endl;
 	cout << "Total des frais pour " << tripAlicia->getName() << " ($ CA): " << tripAlicia->calculateCost() << endl;
 
+	cout << endl;
+
+
+
 	PriceVisitor priceVisitor(1.03, 1.02, 1.02);
 	bdor.accept(priceVisitor);
 
@@ -183,4 +187,5 @@ int main() {
 	cout << endl;
 
 	cout << "Total du nombre d'offres de réservations dans la BDOR: " << tor << "," << endl;
+
 }

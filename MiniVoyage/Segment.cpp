@@ -42,6 +42,22 @@ Segment::const_iterator Segment::end() const {
 	return const_iterator(elements.cend());
 }
 
+string Segment::toString() const {
+	string str;
+	if (getType() == "Voyage")
+		str = getName() + ":\n";
+	else if (getType() == "Journee")
+		str = "  " + getType() + " " + getName() + ":\n";
+
+	if (getType() != "Segment") {
+		for (auto& elem : elements)
+			str += elem->toString();
+		return str;
+	}
+
+	return "";
+}
+
 int Segment::calculateCost() const {
 	int cost = 0;
 

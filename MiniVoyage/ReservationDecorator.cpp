@@ -2,15 +2,30 @@
 #include <iostream>
 #include <stdexcept>
 #include <chrono>
+#include <string>
 #include <iomanip>
 #include <unordered_map>
 
 using namespace std;
 
 ReservationDecorator::ReservationDecorator(Reservation& reservation) : 
-    Reservation(reservation.getName()),
+    Reservation(reservation.getName(), reservation.offer),
     reservation(reservation)
 {}
+
+string ReservationDecorator::toString() const {
+    string str;
+    str += Reservation::toString();
+
+    for (auto& modif : modifications) {
+        str += "      Reservation " + modif.at("name") + " pour le " + modif.at("date") + " à " + modif.at("time") + "." + "\n";
+    }
+
+    for (auto& comment : comments) {
+        str += "      Commentaire: " + comment + ".";
+    }
+    return str;
+}
 
 void ReservationDecorator::addComment(string comment) {
     comments.push_back(comment);

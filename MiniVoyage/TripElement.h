@@ -14,6 +14,7 @@ public:
 	std::string getType() const;
 	virtual TripElement* getElementByName(std::string name) const;
 
+	virtual std::string toString() const = 0;
 	virtual int calculateCost() const = 0;
 
 	// virtual TripElement& add(TripElement& elem);
