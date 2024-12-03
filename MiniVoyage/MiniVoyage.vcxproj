@@ -147,6 +147,8 @@
     <ClInclude Include="Offer.h" />
     <ClInclude Include="OfferIterator.h" />
     <ClInclude Include="OfferIteratorConst.h" />
+    <ClInclude Include="OfferVisitor.h" />
+    <ClInclude Include="PriceVisitor.h" />
     <ClInclude Include="ProxyOffer.h" />
     <ClInclude Include="Reservation.h" />
     <ClInclude Include="Segment.h" />
@@ -166,6 +168,8 @@
     <ClCompile Include="Offer.cpp" />
     <ClCompile Include="OfferIterator.cpp" />
     <ClCompile Include="OfferIteratorConst.cpp" />
+    <ClCompile Include="OfferVisitor.cpp" />
+    <ClCompile Include="PriceVisitor.cpp" />
     <ClCompile Include="ProxyOffer.cpp" />
     <ClCompile Include="Reservation.cpp" />
     <ClCompile Include="Segment.cpp" />

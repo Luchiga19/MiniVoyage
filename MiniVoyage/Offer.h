@@ -3,6 +3,8 @@
 #include <string>
 #include <memory>
 
+class OfferVisitor;
+
 class Offer
 {
 public:
@@ -11,9 +13,11 @@ public:
 
 	int getId() const;
 	virtual std::string getName() const = 0;
+	virtual int getCost() const = 0;
 	virtual Offer* getOfferByName(std::string name) const;
 
-	// virtual Offer& add(Offer& elem);
+	virtual void accept(OfferVisitor& visitor) = 0;
+
 	virtual void add(std::unique_ptr<Offer> elem);
 	virtual std::unique_ptr<Offer> remove(int id);
 

@@ -11,14 +11,13 @@ public:
     ~ItemOffer() override = default ;
 
     std::string getName() const override;
-    int getCost() const;
+    int getCost() const override;
     virtual std::string getType() const = 0;
 
     static void setEuroToCadFactor(double newFactor);
 
     void addData(std::string key, std::string value);
-    
-protected:
+
     void changeDataValue(std::string key, std::string value);
 
 private:

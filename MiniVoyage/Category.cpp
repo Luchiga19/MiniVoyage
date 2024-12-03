@@ -56,12 +56,14 @@ Offer* Category::getOfferByName(string name) const {
 	return nullptr;
 }
 
-/**
-Offer& Category::add(Offer& elem) {
-	add(unique_ptr<Offer>(&elem));
-	return elem;
+int Category::getCost() const {
+	cerr << "Not an itemOffer" << endl;
+	return -1;
 }
-**/
+
+void Category::accept(OfferVisitor& visitor) {
+	visitor.visitCategory(*this);
+}
 
 void Category::add(unique_ptr<Offer> elem) {
 	elements.push_back(move(elem));

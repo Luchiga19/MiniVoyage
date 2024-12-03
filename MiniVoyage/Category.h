@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 
+class OfferVisitor;
+
 class Category :
     public Offer
 {
@@ -25,8 +27,10 @@ public:
 
     std::string getName() const override;
     Offer* getOfferByName(std::string name) const override;
+    int getCost() const override;
 
-    // Offer& add(Offer& elem) override;
+    void accept(OfferVisitor& visitor) override;
+
     void add(std::unique_ptr<Offer> elem) override;
     std::unique_ptr<Offer> remove(const int id) override;
 
