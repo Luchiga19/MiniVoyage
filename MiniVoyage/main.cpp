@@ -7,6 +7,7 @@
 #include "Excursion.h"
 #include "PriceVisitor.h"
 #include "CountVisitor.h"
+#include "ReservationDecorator.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -131,7 +132,9 @@ int main() {
 
 	unique_ptr<Segment> tripDiego = tripDora->clone("Voyage de Diego");
 	
-	tripDiego->remove(tripDiego->getElementByName("Portugal")->getId());
+	unique_ptr<TripElement> removedElem = tripDiego->remove(tripDiego->getElementByName("Portugal")->getId());
+	cout << removedElem->getType() << " " << removedElem->getName() << " efface!" << endl;
+
 
 	unique_ptr<Segment> e = make_unique<Segment>("Espagne", "Segment", tripDiego->getName());
 
@@ -161,9 +164,21 @@ int main() {
 	e->add(move(ej2));
 	e->add(move(ej3));
 
+	unique_ptr<TripElement> removedElem2 = tripDiego->remove(tripDiego->getElementByName("France 2e partie")->getId());
+
 	tripDiego->add(move(e));
 
+	tripDiego->add(move(removedElem2));
+
 	cout << endl;
+
+	unique_ptr<TripElement> moved = tripDiego->remove(tripDiego->getElementByName("Air Europa 1025")->getId());
+	tripDiego->remove(tripDiego->getElementByName("2024-10-31")->getId());
+	tripDiego->getElementByName("2024-10-31")->add(move(moved));
+
+	moved = tripDora->remove(tripDora->getElementByName("easyJet 4592 2024-10-31")->getId());
+	tripDora->remove(tripDora->getElementByName("2024-10-31")->getId());
+	tripDora->getElementByName("2024-10-31")->add(move(moved));
 
 	unique_ptr<Segment> tripAlicia = tripDiego->clone("Voyage d\'Alicia");
 
@@ -175,10 +190,43 @@ int main() {
 
 	cout << endl;
 
+	cout << "--- Debut de la sortie du TP5" << endl;
 
+	cout << endl;
+
+
+	for (auto& trip : { tripDora.get(), tripDiego.get(), tripAlicia.get() }) {
+		TripElement* jourReservation = trip->getElementByName("2024-10-27");
+		TripElement* hotelReservation = jourReservation->getElementByName("Hotel Stella");
+
+		unique_ptr<ReservationDecorator> decoratedRes = make_unique<ReservationDecorator>(*dynamic_cast<Reservation*>(trip->remove(hotelReservation->getId()).get()));
+		decoratedRes->addModification("Restaurant de l'hôtel Stella", "19h", "27 octobre 2024", 0);
+		jourReservation->add(move(decoratedRes));
+	}
+
+	for (auto& trip : { tripDora.get(), tripDiego.get(), tripAlicia.get() }) {
+		TripElement* jourReservation = trip->getElementByName("2024-10-31");
+		TripElement* hotelReservation = jourReservation->getElementByName("Hotel Stella");
+
+		unique_ptr<ReservationDecorator> decoratedRes = make_unique<ReservationDecorator>(*dynamic_cast<Reservation*>(trip->remove(hotelReservation->getId()).get()));
+		decoratedRes->addModification("Restaurant de l'hôtel Stella", "19h", "27 octobre 2024", 0);
+		decoratedRes->addComment("Excellent service!");
+		jourReservation->add(move(decoratedRes));
+	}
+
+	for (auto& trip : { tripDora.get(), tripDiego.get(), tripAlicia.get() }) {
+		TripElement* jourReservation = trip->getElementByName("2024-10-31");
+		ReservationDecorator* hotelReservation = dynamic_cast<ReservationDecorator*>(jourReservation->getElementByName("Hotel Stella"));
+
+		hotelReservation->removeModifications();
+	}
 
 	PriceVisitor priceVisitor(1.03, 1.02, 1.02);
 	bdor.accept(priceVisitor);
+
+	cout << tripDora->toString() << endl;
+	cout << tripDiego->toString() << endl;
+	cout << tripAlicia->toString() << endl;
 
 	CountVisitor countVisitor;
 	bdor.accept(countVisitor);
@@ -187,5 +235,4 @@ int main() {
 	cout << endl;
 
 	cout << "Total du nombre d'offres de réservations dans la BDOR: " << tor << "," << endl;
-
 }

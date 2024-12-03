@@ -7,12 +7,6 @@
 
 using namespace std;
 
-Reservation::Reservation(string name, ProxyOffer& offer) :
-	TripElement(name, "Reservation"),
-	offer(offer),
-	date(""), trip("") 
-{}
-
 Reservation::Reservation(string name, Offer* bdor, string date, string trip) : 
 	TripElement(name, "Reservation"),
 	offer(*dynamic_cast<ItemOffer*>(bdor->getOfferByName(name)), false),

@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <stdexcept>
+#include <cmath>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ string ItemOffer::getName() const {
 int ItemOffer::getCost() const {
 	try {
 		if (data.at("m_devise") == "EURO")
-			return stoi(data.at("m_prixUnitaire")) * euroToCadFactor;
+			return ceil(stoi(data.at("m_prixUnitaire")) * euroToCadFactor);
 		return stoi(data.at("m_prixUnitaire"));
 	}
 	catch (const out_of_range& e) {

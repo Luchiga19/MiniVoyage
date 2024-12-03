@@ -23,13 +23,6 @@ string TripElement::getType() const {
 	return type;
 }
 
-/**
-TripElement& TripElement::add(TripElement& elem) {
-	cerr << NON_COMPOSITE_ERROR_MESSAGE << endl;
-	return elem;
-}
-**/
-
 void TripElement::add(std::unique_ptr<TripElement> elem) {
 	cerr << NON_COMPOSITE_ERROR_MESSAGE << endl;
 }

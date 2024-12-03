@@ -49,11 +49,9 @@ string Segment::toString() const {
 	else if (getType() == "Journee")
 		str = "  " + getType() + " " + getName() + ":\n";
 
-	if (getType() != "Segment") {
-		for (auto& elem : elements)
-			str += elem->toString();
-		return str;
-	}
+	for (auto& elem : elements)
+		str += elem->toString();
+	return str;
 
 	return "";
 }
@@ -70,7 +68,7 @@ int Segment::calculateCost() const {
 
 TripElement* Segment::getElementByName(std::string name) const {
 	TripElement* tripElem = nullptr;
-	if (auto ptr = dynamic_cast<Segment*>(elements[0].get())) {
+	if (!elements.empty() && dynamic_cast<Segment*>(elements[0].get()) != nullptr) {
 		for (auto& elem : elements) {
 			tripElem = elem->getElementByName(name);
 
@@ -142,7 +140,6 @@ unique_ptr<TripElement> Segment::removeElement(const int id) {
 	if (it != elements.end()) {
 		unique_ptr<TripElement> removedElem = move(*it);
 		elements.erase(it);
-		cout << removedElem->getType() << " " << removedElem->getName() << " efface!" << endl;
 		return removedElem;
 	}
 

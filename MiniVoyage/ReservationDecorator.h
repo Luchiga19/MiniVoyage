@@ -18,10 +18,13 @@ public:
 
     std::string toString() const override;
 
+    int calculateCost() const override;
+
     void addComment(std::string comment);
     std::string removeComment(size_t index);
 
-    void addModification(const std::string& name, const std::string& time, const std::string& date);
+    void addModification(const std::string& name, const std::string& time, const std::string& date, int cost);
+    void removeModifications();
 
 private:
     const Reservation& reservation;

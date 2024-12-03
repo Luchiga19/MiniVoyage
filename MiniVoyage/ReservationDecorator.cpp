@@ -9,7 +9,7 @@
 using namespace std;
 
 ReservationDecorator::ReservationDecorator(Reservation& reservation) : 
-    Reservation(reservation.getName(), reservation.offer),
+    Reservation(reservation),
     reservation(reservation)
 {}
 
@@ -22,9 +22,17 @@ string ReservationDecorator::toString() const {
     }
 
     for (auto& comment : comments) {
-        str += "      Commentaire: " + comment + ".";
+        str += "      Commentaire: " + comment + ".\n";
     }
     return str;
+}
+
+int ReservationDecorator::calculateCost() const {
+    int cost = 0;
+    for (auto& data : modifications) {
+        cost += stoi(data.at("cost"));
+    }
+    return Reservation::calculateCost() + cost;
 }
 
 void ReservationDecorator::addComment(string comment) {
@@ -40,10 +48,15 @@ string ReservationDecorator::removeComment(size_t index) {
     return removedComment;
 }
 
-void ReservationDecorator::addModification(const string& name, const string& time, const string& date) {
+void ReservationDecorator::addModification(const string& name, const string& time, const string& date, int cost) {
     unordered_map<string, string> data;
     data["name"] = name;
     data["time"] = time;
     data["date"] = date;
+    data["cost"] = to_string(cost);
     modifications.push_back(data);
+}
+
+void ReservationDecorator::removeModifications() {
+    modifications.clear();
 }

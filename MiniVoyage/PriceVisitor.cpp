@@ -3,6 +3,7 @@
 #include "Flight.h"
 #include "Excursion.h"
 #include <string>
+#include <cmath>
 
 using namespace std;
 
@@ -13,9 +14,9 @@ void PriceVisitor::visitHotel(Hotel& hotel) {
 }
 
 void PriceVisitor::visitExcursion(Excursion& excursion) {
-	int cost = excursion.getCost();
-	cost *= excursionFactor;
-	excursion.changeDataValue("m_prixUnitaire", to_string(cost));
+	double cost = excursion.getCost();
+	int ceilCost = ceil(cost * excursionFactor);
+	excursion.changeDataValue("m_prixUnitaire", to_string(ceilCost));
 }
 
 void PriceVisitor::visitFlight(Flight& flight) {
