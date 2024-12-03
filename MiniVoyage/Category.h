@@ -30,7 +30,7 @@ public:
     void add(std::unique_ptr<Offer> elem) override;
     std::unique_ptr<Offer> remove(const int id) override;
 
-    void addFromFile(std::string path) override;
+    void addFromFile(std::string path, std::string type) override;
 
 private:
     std::unique_ptr<Offer> removeCategory(const int id);

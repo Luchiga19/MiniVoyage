@@ -8,18 +8,21 @@ class ItemOffer :
     public Offer
 {
 public:
-    ~ItemOffer() = default;
+    ~ItemOffer() override = default ;
 
     std::string getName() const override;
     int getCost() const;
+    virtual std::string getType() const = 0;
 
     static void setEuroToCadFactor(double newFactor);
 
     void addData(std::string key, std::string value);
+    
+protected:
+    void changeDataValue(std::string key, std::string value);
 
 private:
     static double euroToCadFactor;
 
-    void changeDataValue(std::string key, std::string value);
     std::unordered_map<std::string, std::string> data;
 };
