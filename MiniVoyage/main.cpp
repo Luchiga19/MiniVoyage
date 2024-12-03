@@ -6,6 +6,7 @@
 #include "Hotel.h"
 #include "Excursion.h"
 #include "PriceVisitor.h"
+#include "CountVisitor.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -172,12 +173,14 @@ int main() {
 	cout << "Total des frais pour " << tripDiego->getName() << " ($ CA): " << tripDiego->calculateCost() << endl;
 	cout << "Total des frais pour " << tripAlicia->getName() << " ($ CA): " << tripAlicia->calculateCost() << endl;
 
-	/**
-	Offer* of = bdor.getOfferByName("Air Europa 1026");
-	cout << of->getCost() << endl;
-	PriceVisitor priceVisitor(1.5, 1.5, 1.5);
+	PriceVisitor priceVisitor(1.03, 1.02, 1.02);
 	bdor.accept(priceVisitor);
-	cout << of->getCost() << endl;
-	**/
 
+	CountVisitor countVisitor;
+	bdor.accept(countVisitor);
+	int tor = countVisitor.getCount();
+
+	cout << endl;
+
+	cout << "Total du nombre d'offres de réservations dans la BDOR: " << tor << "," << endl;
 }

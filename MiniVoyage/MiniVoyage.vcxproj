@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Category.h" />
+    <ClInclude Include="CountVisitor.h" />
     <ClInclude Include="Excursion.h" />
     <ClInclude Include="Flight.h" />
     <ClInclude Include="Hotel.h" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Category.cpp" />
+    <ClCompile Include="CountVisitor.cpp" />
     <ClCompile Include="Excursion.cpp" />
     <ClCompile Include="Flight.cpp" />
     <ClCompile Include="Hotel.cpp" />
