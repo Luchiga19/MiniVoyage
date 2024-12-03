@@ -7,6 +7,11 @@
 
 using namespace std;
 
+Reservation::Reservation(string name) :
+	TripElement(name, "Reservation"),
+	date(""), trip("") 
+{}
+
 Reservation::Reservation(string name, Offer* bdor, string date, string trip) : 
 	TripElement(name, "Reservation"),
 	offer(*dynamic_cast<ItemOffer*>(bdor->getOfferByName(name)), false),

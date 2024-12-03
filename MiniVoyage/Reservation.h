@@ -9,6 +9,7 @@ class Reservation :
     public TripElement
 {
 public:
+    Reservation(std::string name);
     Reservation(std::string name, Offer* bdor, std::string date, std::string trip);
     Reservation(const Reservation& other);
     ~Reservation() override = default;
@@ -19,7 +20,7 @@ public:
 
     ProxyOffer offer;
 
-private:
+protected:
     std::string date;
     std::string trip;
 };

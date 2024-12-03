@@ -8,22 +8,21 @@
 #include <fstream>
 #include <ctime>
 
-class ReservationDecorator : public Reservation
+class ReservationDecorator :
+    public Reservation
 {
 public:
-    ReservationDecorator(const Reservation& reservation);
+    ReservationDecorator(Reservation& reservation);
     ~ReservationDecorator() override = default;
 
-    void addComment(const std::string& comment);
-    void removeComment(size_t index);
+    void addComment(std::string comment);
+    std::string removeComment(size_t index);
 
-    void addModification(const std::string& modification);
-
+    void addModification(const std::string& name, const std::string& time, const std::string& date);
 
 private:
+    const Reservation& reservation;
     std::vector<std::string> comments;
-    std::vector<std::string> modifications; // Modifications et coûts associés
-
-    std::string getCurrentTimestamp() const;
+    std::vector<unordered_map<string, string>> modifications; // Modifications et coûts associés
 };
 
