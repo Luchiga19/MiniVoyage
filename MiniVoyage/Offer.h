@@ -17,7 +17,7 @@ public:
 	virtual void add(std::unique_ptr<Offer> elem);
 	virtual std::unique_ptr<Offer> remove(int id);
 
-	virtual void addFromFile(std::string path);
+	virtual void addFromFile(std::string path, std::string type);
 
 private:
 	static const std::string NON_COMPOSITE_ERROR_MESSAGE;

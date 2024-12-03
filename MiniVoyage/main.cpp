@@ -2,6 +2,9 @@
 #include "ItemOffer.h"
 #include "Segment.h"
 #include "Reservation.h"
+#include "Flight.h"
+#include "Hotel.h"
+#include "Excursion.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -22,7 +25,7 @@ int main() {
 	}
 
 	for (auto& category : bdor) {
-		category.addFromFile("../assets/" + category.getName() + ".csv");
+		category.addFromFile("../assets/" + category.getName() + ".csv", category.getName());
 	}
 
 	cout << endl;

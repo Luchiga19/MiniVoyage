@@ -15,4 +15,3 @@ public:
     Offer& operator*() override;
     Offer* operator->() override;
 };
-

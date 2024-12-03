@@ -1,4 +1,7 @@
 #include "Category.h"
+#include "Flight.h"
+#include "Hotel.h"
+#include "Excursion.h"
 #include "ItemOffer.h"
 #include <memory>
 #include <vector>
@@ -79,7 +82,7 @@ unique_ptr<Offer> Category::remove(const int id) {
 	return removeItemOffer(id);
 }
 
-void Category::addFromFile(string path) {
+void Category::addFromFile(string path, string type) {
 	ifstream file(path);
 	if (!file.is_open()) {
 		cerr << "Could not open the file" << endl;
@@ -92,7 +95,14 @@ void Category::addFromFile(string path) {
 
 		while (getline(file, line)) {
 			vector<string> row = parseCsvLine(line);
-			auto item = make_unique<ItemOffer>();
+
+			unique_ptr<ItemOffer> item;
+			if (type == "transport")
+				item = make_unique<Flight>();
+			else if (type == "hebergement")
+				item = make_unique<Hotel>();
+			else if (type == "excursion")
+				item = make_unique<Excursion>();
 
 			for (size_t i = 0; i < headers.size(); i++)
 				item->addData(headers[i], row[i]);

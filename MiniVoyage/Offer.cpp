@@ -37,6 +37,6 @@ unique_ptr<Offer> Offer::remove(int id) {
 	return nullptr;
 }
 
-void Offer::addFromFile(string path) {
+void Offer::addFromFile(string path, string type) {
 	cerr << NOM_COMPOSITE_ERROR_MESSAGE << endl;
 }
