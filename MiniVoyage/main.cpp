@@ -8,6 +8,7 @@
 #include "PriceVisitor.h"
 #include "CountVisitor.h"
 #include "ReservationDecorator.h"
+#include "OfferDecorator.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -194,6 +195,9 @@ int main() {
 
 	cout << endl;
 
+	tripDora->log("logDora.txt");
+	tripDiego->log("logDiego.txt");
+	tripAlicia->log("logAlicia.txt");
 
 	for (auto& trip : { tripDora.get(), tripDiego.get(), tripAlicia.get() }) {
 		TripElement* jourReservation = trip->getElementByName("2024-10-27");
@@ -220,6 +224,12 @@ int main() {
 
 		hotelReservation->removeModifications();
 	}
+
+	unique_ptr<Offer> removedOffer = bdor.remove(bdor.getOfferByName("Visite guidée pour voir les chefs-d'œuvre du musée du Louvre")->getId());
+	unique_ptr<OfferDecorator> decoratedOffer = make_unique<OfferDecorator>(move(unique_ptr<Excursion>(static_cast<Excursion*>(removedOffer.release()))));
+	decoratedOffer->addComment("Rabais de 5 dollars canadiens au Louvre pour les etudiants de Polytechnique Montreal!");
+	decoratedOffer->addFlatDiscount(5);
+	bdor.getOfferByName("excursion")->add(move(decoratedOffer));
 
 	PriceVisitor priceVisitor(1.03, 1.02, 1.02);
 	bdor.accept(priceVisitor);

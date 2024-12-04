@@ -1,5 +1,6 @@
 #include "TripElement.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std;
@@ -35,6 +36,15 @@ unique_ptr<TripElement> TripElement::remove(int id) {
 TripElement* TripElement::getElementByName(std::string name) const {
 	cerr << NON_COMPOSITE_ERROR_MESSAGE << endl;
 	return nullptr;
+}
+
+void TripElement::log(string filename) const {
+	ofstream outFile(filename);
+
+	if (outFile.is_open()) {
+		outFile << toString();
+		outFile.close();
+	}
 }
 
 void TripElement::setName(std::string name) {

@@ -7,39 +7,51 @@
 
 using namespace std;
 
-
-OfferDecorator::OfferDecorator(ItemOffer& offer) {
-	offerId = offer.getId();
-}
-
+OfferDecorator::OfferDecorator(unique_ptr<ItemOffer> offer) : offer(move(offer)) {}
 
 void OfferDecorator::addComment(std::string comment)  {
-	comment = comment;
-	cout << "Le commentaire " << comment << " a été ajouté à l'offre" << offerId << endl;
+	comments.push_back(comment);
 }
 
-
-void OfferDecorator::removeComment() {
-	comment = "";
-	cout << "Le commentaire de l'offre " << offerId << " a été supprimé." << endl;
-}
-
-void OfferDecorator::addTemporaryDiscount(double discountPercentage) {
-	if (discountPercentage <= 0 || discountPercentage > 100) {
-		throw invalid_argument("Le pourcentage de rabais doit être entre 0 et 100.");
+string OfferDecorator::removeComment(size_t index) {
+	if (index >= comments.size()) {
+		throw out_of_range("Index du commentaire invalide.");
 	}
-	temporaryDiscount = discountPercentage;
-	cout << "Rabais temporaire de " << discountPercentage << "% ajouté à l'offre ID: " << offerId << endl;
+	string removedComment = comments[index];
+	comments.erase(comments.begin() + index);
+	return removedComment;
+}
+
+void OfferDecorator::addFlatDiscount(int flatDiscount) {
+	if (flatDiscount > 0)
+		temporaryDiscount = flatDiscount;
 }
 
 void OfferDecorator::removeTemporaryDiscount() {
-	temporaryDiscount = 0.0;
+	temporaryDiscount = 0;
 }
 
-double OfferDecorator::getCostWithDiscount(const ItemOffer& offer) {
-	double originalCost = static_cast<double>(offer.getCost());
-	if (temporaryDiscount > 0.0) {
-		return originalCost * (1 - (temporaryDiscount / 100));
-	}
-	return originalCost;
+void OfferDecorator::accept(OfferVisitor& visitor) {
+	offer->accept(visitor);
+}
+
+string OfferDecorator::toString() const {
+	string str;
+
+	for (auto& comment : comments)
+		str += "      Commentaire: " + comment + "\n";
+	return str;
+}
+
+string OfferDecorator::getName() const {
+	return offer->getName();
+}
+
+int OfferDecorator::getCost() const {
+	int cost = offer->getCost();
+	return cost - temporaryDiscount;
+}
+
+string OfferDecorator::getType() const {
+	return offer->getType();
 }

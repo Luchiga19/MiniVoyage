@@ -9,7 +9,7 @@ using namespace std;
 
 Reservation::Reservation(string name, Offer* bdor, string date, string trip) : 
 	TripElement(name, "Reservation"),
-	offer(*dynamic_cast<ItemOffer*>(bdor->getOfferByName(name)), false),
+	offer(bdor, name, false),
 	date(date),
 	trip(trip)
 {
@@ -22,7 +22,8 @@ Reservation::Reservation(const Reservation& other) :
 {}
 
 string Reservation::toString() const {
-	return "    " + getType() + " " + getName() + ", prix total ($ CA): " + to_string(calculateCost()) + ".\n";
+	return "    " + getType() + " " + getName() + ", prix total ($ CA): " + to_string(calculateCost()) + ".\n" + offer.toString();
+
 }
 
 int Reservation::calculateCost() const {

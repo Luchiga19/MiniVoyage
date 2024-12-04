@@ -17,10 +17,11 @@ public:
 	virtual std::string toString() const = 0;
 	virtual int calculateCost() const = 0;
 
-	// virtual TripElement& add(TripElement& elem);
 	virtual void add(std::unique_ptr<TripElement> elem);
 	virtual std::unique_ptr<TripElement> remove(const int id);
 	virtual std::unique_ptr<TripElement> clone() const = 0;
+
+	void log(std::string filename) const;
 
 protected:
 	void setName(std::string name);

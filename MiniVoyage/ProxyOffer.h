@@ -9,10 +9,16 @@ class ProxyOffer :
     public Offer
 {
 public:
-    ProxyOffer(ItemOffer& offer, bool access) : offer(offer), access(access) {}
+    ProxyOffer(Offer* bdor, std::string name, bool access) : 
+        bdor(bdor), 
+        name(name), 
+        access(access) 
+    {}
     ProxyOffer(const ProxyOffer& other);
     ~ProxyOffer() = default;
     
+    std::string toString() const override;
+
     std::string getName() const override;
     int getCost() const;
 
@@ -21,6 +27,7 @@ public:
     void addData(std::string key, std::string value);
 
 private:
-    ItemOffer& offer;
+    std::string name;
+    Offer* bdor;
     const bool access;
 };

@@ -3,6 +3,7 @@
 #include "ItemOffer.h"
 #include "OfferIterator.h"
 #include "OfferIteratorConst.h"
+#include "OfferVisitor.h"
 #include <memory>
 #include <vector>
 #include <string>
@@ -12,21 +13,28 @@ class OfferDecorator:
 {
 public:
 
-    OfferDecorator(ItemOffer& offer);
+    OfferDecorator(std::unique_ptr<ItemOffer> offer);
     ~OfferDecorator() = default;
 
     void addComment(std::string comment);
-    void removeComment();
+    std::string removeComment(size_t index);
 
-    void addTemporaryDiscount(double discountPourcentage);
+    void addFlatDiscount(int flatDiscount);
     void removeTemporaryDiscount();
 
-    double getCostWithDiscount(const ItemOffer& offer);
+    void accept(OfferVisitor& visitor);
 
+    std::string toString() const override;
 
+    std::string getName() const override;
+    int getCost() const override;
+
+    std::string getType() const override;
+
+    std::unique_ptr<ItemOffer> offer;
+    
 private:
-    int offerId;
-    std::string comment;
-    double temporaryDiscount = 0.0;
+    std::vector<std::string> comments;
+    int temporaryDiscount = 0;
 };
 

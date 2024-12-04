@@ -12,7 +12,7 @@ string ItemOffer::getName() const {
 	try {
 		return data.at("m_nom");
 	}
-	catch (const out_of_range& e) {
+	catch (const out_of_range&) {
 		throw ("Pas de nom associé à cette offre");
 	}
 }
@@ -20,13 +20,13 @@ string ItemOffer::getName() const {
 int ItemOffer::getCost() const {
 	try {
 		if (data.at("m_devise") == "EURO")
-			return ceil(stoi(data.at("m_prixUnitaire")) * euroToCadFactor);
+			return static_cast<int>(ceil(stoi(data.at("m_prixUnitaire")) * euroToCadFactor));
 		return stoi(data.at("m_prixUnitaire"));
 	}
-	catch (const out_of_range& e) {
+	catch (const out_of_range&) {
 		throw ("Pas de coût associé à cette offre");
 	}
-	catch (const invalid_argument& e) {
+	catch (const invalid_argument&) {
 		throw ("La valeur associée au cout n'est pas conversible à un entier");
 	}
 }

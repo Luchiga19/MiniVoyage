@@ -4,19 +4,24 @@
 using namespace std;
 
 ProxyOffer::ProxyOffer(const ProxyOffer& other) :
-	offer(other.offer),
+	bdor(other.bdor),
+	name(other.name),
 	access(other.access)
 {}
 
+string ProxyOffer::toString() const {
+	return bdor->getOfferByName(name)->toString();
+}
+
 string ProxyOffer::getName() const {
-	return offer.getName();
+	return name;
 }
 
 int ProxyOffer::getCost() const {
-	return offer.getCost();
+	return bdor->getOfferByName(name)->getCost();
 }
 
 void ProxyOffer::addData(string key, string value) {
 	if (access)
-		offer.addData(key, value);
+		dynamic_cast<ItemOffer*>(bdor->getOfferByName(name))->addData(key, value);
 }

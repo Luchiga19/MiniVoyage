@@ -21,12 +21,9 @@ Offer* Offer::getOfferByName(std::string name) const {
 	return nullptr;
 }
 
-/**
-Offer& Offer::add(Offer& elem) {
-	cerr << NOM_COMPOSITE_ERROR_MESSAGE << endl;
-	return elem;
+string Offer::toString() const {
+	return "";
 }
-**/
 
 void Offer::add(unique_ptr<Offer> elem) {
 	cerr << NOM_COMPOSITE_ERROR_MESSAGE << endl;

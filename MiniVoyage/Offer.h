@@ -16,6 +16,8 @@ public:
 	virtual int getCost() const = 0;
 	virtual Offer* getOfferByName(std::string name) const;
 
+	virtual std::string toString() const;
+
 	virtual void accept(OfferVisitor& visitor) = 0;
 
 	virtual void add(std::unique_ptr<Offer> elem);
